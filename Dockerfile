@@ -24,6 +24,7 @@ RUN apt-get update && apt-get install -y \
     libc6-dev-arm64-cross \
     libcurl4-openssl-dev:arm64 \
     libssl-dev:arm64 \
+    libvulkan-dev \
     && update-ca-certificates
 
 WORKDIR /workspace
@@ -51,6 +52,7 @@ RUN cmake -S . -B build \
     -DLLAMA_BUILD_TESTS=OFF \
     -DGGML_BACKEND_DL=ON \
     -DGGML_CPU_ALL_VARIANTS=ON && \
+    -DGGML_VULKAN=1 && \
     cmake --build build -j $(nproc)
 
 RUN mkdir -p /app/full \
